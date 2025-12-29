@@ -9,6 +9,7 @@ import keplerGlReducer, { enhanceReduxMiddleware } from "@kepler.gl/reducers";
 
 import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
 import KeplerMap from "./KeplerMap";
+import { useLoadData } from "./useLoadData";
 
 const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
 
@@ -100,23 +101,28 @@ const enhancers = applyMiddleware(...middleWares);
 const initialState = {};
 const store = createStore(reducers, initialState, compose(enhancers));
 
-const App = () => (
-  <div
-    style={{
-      position: "absolute",
-      top: "0px",
-      left: "0px",
-      width: "100%",
-      height: "100%",
-    }}
-  >
-    <AutoSizer>
-      {({ height, width }) => (
-        <KeplerMap height={height} width={width} mapStyles={mapStyles} />
-      )}
-    </AutoSizer>
-  </div>
-);
+const App = () => {
+  // Load all datasets on mount
+  useLoadData();
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: "0px",
+        left: "0px",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <AutoSizer>
+        {({ height, width }) => (
+          <KeplerMap height={height} width={width} mapStyles={mapStyles} />
+        )}
+      </AutoSizer>
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => state;
 const dispatchToProps = (dispatch) => ({ dispatch });

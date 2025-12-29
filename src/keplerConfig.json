@@ -1,0 +1,894 @@
+{
+  "version": "v1",
+  "config": {
+    "visState": {
+      "filters": [],
+      "layers": [
+        {
+          "id": "n55jaso",
+          "type": "geojson",
+          "config": {
+            "dataId": "cargo_density",
+            "columnMode": "geojson",
+            "label": "Cargo Vessel Density",
+            "color": [
+              18,
+              92,
+              119
+            ],
+            "highlightColor": [
+              252,
+              242,
+              26,
+              255
+            ],
+            "columns": {
+              "geojson": "_geojson",
+              "lat": "latitude",
+              "lng": "longitude"
+            },
+            "isVisible": true,
+            "visConfig": {
+              "opacity": 0.35,
+              "strokeOpacity": 0.8,
+              "thickness": 1,
+              "strokeColor": null,
+              "colorRange": {
+                "name": "color.customPalette.custom.density",
+                "type": "custom",
+                "category": "Custom",
+                "colors": [
+                  "#5E4FA2",
+                  "#496DAF",
+                  "#428BB5",
+                  "#52A9AF",
+                  "#6FC1A8",
+                  "#91D3A4",
+                  "#B3E0A1",
+                  "#D2ED9E",
+                  "#E8F6A4",
+                  "#F7FAAF",
+                  "#FDF4AB",
+                  "#FEE597",
+                  "#FECF7E",
+                  "#FCB469",
+                  "#F99657",
+                  "#F2764B",
+                  "#E65A49",
+                  "#D33E4B",
+                  "#BA2148",
+                  "#9E0142"
+                ]
+              },
+              "strokeColorRange": {
+                "name": "Global Warming",
+                "type": "sequential",
+                "category": "Uber",
+                "colors": [
+                  "#4C0035",
+                  "#880030",
+                  "#B72F15",
+                  "#D6610A",
+                  "#EF9100",
+                  "#FFC300"
+                ]
+              },
+              "radius": 5,
+              "sizeRange": [
+                0,
+                10
+              ],
+              "radiusRange": [
+                0,
+                50
+              ],
+              "heightRange": [
+                0,
+                500
+              ],
+              "elevationScale": 5,
+              "stroked": false,
+              "filled": true,
+              "enable3d": false,
+              "wireframe": false,
+              "fixedHeight": false
+            },
+            "hidden": false,
+            "textLabel": [
+              {
+                "field": null,
+                "color": [
+                  255,
+                  255,
+                  255
+                ],
+                "size": 18,
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor": "start",
+                "alignment": "center",
+                "outlineWidth": 0,
+                "outlineColor": [
+                  255,
+                  0,
+                  0,
+                  255
+                ],
+                "background": false,
+                "backgroundColor": [
+                  0,
+                  0,
+                  200,
+                  255
+                ]
+              }
+            ]
+          },
+          "visualChannels": {
+            "colorField": {
+              "name": "density",
+              "type": "real"
+            },
+            "colorScale": "quantile",
+            "strokeColorField": {
+              "name": "density",
+              "type": "real"
+            },
+            "strokeColorScale": "quantile",
+            "sizeField": null,
+            "sizeScale": "linear",
+            "heightField": null,
+            "heightScale": "linear",
+            "radiusField": null,
+            "radiusScale": "linear"
+          }
+        },
+        {
+          "id": "n1s83tp",
+          "type": "geojson",
+          "config": {
+            "dataId": "fishing_density",
+            "columnMode": "geojson",
+            "label": "Fishing Vessel Density",
+            "color": [
+              246,
+              209,
+              138
+            ],
+            "highlightColor": [
+              252,
+              242,
+              26,
+              255
+            ],
+            "columns": {
+              "geojson": "_geojson",
+              "lat": "latitude",
+              "lng": "longitude"
+            },
+            "isVisible": true,
+            "visConfig": {
+              "opacity": 0.35,
+              "strokeOpacity": 0.8,
+              "thickness": 2,
+              "strokeColor": null,
+              "colorRange": {
+                "colors": [
+                  "#5E4FA2",
+                  "#496DAF",
+                  "#428BB5",
+                  "#52A9AF",
+                  "#6FC1A8",
+                  "#91D3A4",
+                  "#B3E0A1",
+                  "#D2ED9E",
+                  "#E8F6A4",
+                  "#F7FAAF",
+                  "#FDF4AB",
+                  "#FEE597",
+                  "#FECF7E",
+                  "#FCB469",
+                  "#F99657",
+                  "#F2764B",
+                  "#E65A49",
+                  "#D33E4B",
+                  "#BA2148",
+                  "#9E0142"
+                ],
+                "name": "Spectral",
+                "type": "diverging",
+                "category": "ColorBrewer",
+                "reversed": true
+              },
+              "strokeColorRange": {
+                "name": "Global Warming",
+                "type": "sequential",
+                "category": "Uber",
+                "colors": [
+                  "#4C0035",
+                  "#880030",
+                  "#B72F15",
+                  "#D6610A",
+                  "#EF9100",
+                  "#FFC300"
+                ]
+              },
+              "radius": 3,
+              "sizeRange": [
+                0,
+                10
+              ],
+              "radiusRange": [
+                0,
+                50
+              ],
+              "heightRange": [
+                0,
+                500
+              ],
+              "elevationScale": 5,
+              "stroked": false,
+              "filled": true,
+              "enable3d": false,
+              "wireframe": false,
+              "fixedHeight": false
+            },
+            "hidden": false,
+            "textLabel": [
+              {
+                "field": null,
+                "color": [
+                  255,
+                  255,
+                  255
+                ],
+                "size": 18,
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor": "start",
+                "alignment": "center",
+                "outlineWidth": 0,
+                "outlineColor": [
+                  255,
+                  0,
+                  0,
+                  255
+                ],
+                "background": false,
+                "backgroundColor": [
+                  0,
+                  0,
+                  200,
+                  255
+                ]
+              }
+            ]
+          },
+          "visualChannels": {
+            "colorField": {
+              "name": "density",
+              "type": "real"
+            },
+            "colorScale": "quantile",
+            "strokeColorField": null,
+            "strokeColorScale": "quantile",
+            "sizeField": null,
+            "sizeScale": "linear",
+            "heightField": null,
+            "heightScale": "linear",
+            "radiusField": null,
+            "radiusScale": "linear"
+          }
+        },
+        {
+          "id": "lpockl9",
+          "type": "geojson",
+          "config": {
+            "dataId": "tanker_density",
+            "columnMode": "geojson",
+            "label": "Tanker Vessel Density",
+            "color": [
+              130,
+              154,
+              227
+            ],
+            "highlightColor": [
+              252,
+              242,
+              26,
+              255
+            ],
+            "columns": {
+              "geojson": "_geojson",
+              "lat": "latitude",
+              "lng": "longitude"
+            },
+            "isVisible": true,
+            "visConfig": {
+              "opacity": 0.35,
+              "strokeOpacity": 0.8,
+              "thickness": 2,
+              "strokeColor": null,
+              "colorRange": {
+                "colors": [
+                  "#5E4FA2",
+                  "#496DAF",
+                  "#428BB5",
+                  "#52A9AF",
+                  "#6FC1A8",
+                  "#91D3A4",
+                  "#B3E0A1",
+                  "#D2ED9E",
+                  "#E8F6A4",
+                  "#F7FAAF",
+                  "#FDF4AB",
+                  "#FEE597",
+                  "#FECF7E",
+                  "#FCB469",
+                  "#F99657",
+                  "#F2764B",
+                  "#E65A49",
+                  "#D33E4B",
+                  "#BA2148",
+                  "#9E0142"
+                ],
+                "name": "Spectral",
+                "type": "diverging",
+                "category": "ColorBrewer",
+                "reversed": true
+              },
+              "strokeColorRange": {
+                "name": "Global Warming",
+                "type": "sequential",
+                "category": "Uber",
+                "colors": [
+                  "#4C0035",
+                  "#880030",
+                  "#B72F15",
+                  "#D6610A",
+                  "#EF9100",
+                  "#FFC300"
+                ]
+              },
+              "radius": 3,
+              "sizeRange": [
+                0,
+                10
+              ],
+              "radiusRange": [
+                0,
+                50
+              ],
+              "heightRange": [
+                0,
+                500
+              ],
+              "elevationScale": 5,
+              "stroked": false,
+              "filled": true,
+              "enable3d": false,
+              "wireframe": false,
+              "fixedHeight": false
+            },
+            "hidden": false,
+            "textLabel": [
+              {
+                "field": null,
+                "color": [
+                  255,
+                  255,
+                  255
+                ],
+                "size": 18,
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor": "start",
+                "alignment": "center",
+                "outlineWidth": 0,
+                "outlineColor": [
+                  255,
+                  0,
+                  0,
+                  255
+                ],
+                "background": false,
+                "backgroundColor": [
+                  0,
+                  0,
+                  200,
+                  255
+                ]
+              }
+            ]
+          },
+          "visualChannels": {
+            "colorField": {
+              "name": "density",
+              "type": "real"
+            },
+            "colorScale": "quantile",
+            "strokeColorField": null,
+            "strokeColorScale": "quantile",
+            "sizeField": null,
+            "sizeScale": "linear",
+            "heightField": null,
+            "heightScale": "linear",
+            "radiusField": null,
+            "radiusScale": "linear"
+          }
+        },
+        {
+          "id": "beach_hexbin",
+          "type": "hexagon",
+          "config": {
+            "dataId": "beach_litter",
+            "label": "Beach Litter (3D)",
+            "color": [
+              179,
+              173,
+              158
+            ],
+            "highlightColor": [
+              252,
+              242,
+              26,
+              255
+            ],
+            "columns": {
+              "lat": "BeachLatitude",
+              "lng": "BeachLongitude"
+            },
+            "isVisible": true,
+            "visConfig": {
+              "opacity": 0.55,
+              "worldUnitSize": 10,
+              "resolution": 8,
+              "colorRange": {
+                "name": "YlOrRd",
+                "type": "sequential",
+                "category": "ColorBrewer",
+                "colors": [
+                  "#ffffb2",
+                  "#fed976",
+                  "#feb24c",
+                  "#fd8d3c",
+                  "#f03b20",
+                  "#bd0026"
+                ]
+              },
+              "coverage": 0.9,
+              "sizeRange": [
+                0,
+                500
+              ],
+              "percentile": [
+                0,
+                100
+              ],
+              "elevationPercentile": [
+                0,
+                100
+              ],
+              "elevationScale": 50,
+              "enableElevationZoomFactor": true,
+              "fixedHeight": false,
+              "colorAggregation": "sum",
+              "sizeAggregation": "sum",
+              "enable3d": true
+            },
+            "hidden": false,
+            "textLabel": [
+              {
+                "field": null,
+                "color": [
+                  255,
+                  255,
+                  255
+                ],
+                "size": 18,
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor": "start",
+                "alignment": "center",
+                "outlineWidth": 0,
+                "outlineColor": [
+                  255,
+                  0,
+                  0,
+                  255
+                ],
+                "background": false,
+                "backgroundColor": [
+                  0,
+                  0,
+                  200,
+                  255
+                ]
+              }
+            ]
+          },
+          "visualChannels": {
+            "colorField": {
+              "name": "total_items",
+              "type": "integer"
+            },
+            "colorScale": "quantile",
+            "sizeField": {
+              "name": "total_items",
+              "type": "integer"
+            },
+            "sizeScale": "linear"
+          }
+        },
+        {
+          "id": "seafloor_hexbin",
+          "type": "hexagon",
+          "config": {
+            "dataId": "seafloor_litter",
+            "label": "Seafloor Litter (3D)",
+            "color": [
+              18,
+              147,
+              154
+            ],
+            "highlightColor": [
+              252,
+              242,
+              26,
+              255
+            ],
+            "columns": {
+              "lat": "latitude",
+              "lng": "longitude"
+            },
+            "isVisible": true,
+            "visConfig": {
+              "opacity": 0.55,
+              "worldUnitSize": 10,
+              "resolution": 8,
+              "colorRange": {
+                "name": "BuGn",
+                "type": "sequential",
+                "category": "ColorBrewer",
+                "colors": [
+                  "#edf8fb",
+                  "#ccece6",
+                  "#99d8c9",
+                  "#66c2a4",
+                  "#2ca25f",
+                  "#006d2c"
+                ]
+              },
+              "coverage": 0.85,
+              "sizeRange": [
+                0,
+                500
+              ],
+              "percentile": [
+                0,
+                100
+              ],
+              "elevationPercentile": [
+                0,
+                100
+              ],
+              "elevationScale": 50,
+              "enableElevationZoomFactor": true,
+              "fixedHeight": false,
+              "colorAggregation": "sum",
+              "sizeAggregation": "sum",
+              "enable3d": true
+            },
+            "hidden": false,
+            "textLabel": [
+              {
+                "field": null,
+                "color": [
+                  255,
+                  255,
+                  255
+                ],
+                "size": 18,
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor": "start",
+                "alignment": "center",
+                "outlineWidth": 0,
+                "outlineColor": [
+                  255,
+                  0,
+                  0,
+                  255
+                ],
+                "background": false,
+                "backgroundColor": [
+                  0,
+                  0,
+                  200,
+                  255
+                ]
+              }
+            ]
+          },
+          "visualChannels": {
+            "colorField": {
+              "name": "total_items",
+              "type": "integer"
+            },
+            "colorScale": "quantile",
+            "sizeField": {
+              "name": "total_items",
+              "type": "integer"
+            },
+            "sizeScale": "linear"
+          }
+        },
+        {
+          "id": "floating_hexbin",
+          "type": "hexagon",
+          "config": {
+            "dataId": "floating_litter",
+            "label": "Floating Micro-litter (3D)",
+            "color": [
+              221,
+              178,
+              124
+            ],
+            "highlightColor": [
+              252,
+              242,
+              26,
+              255
+            ],
+            "columns": {
+              "lat": "latitude",
+              "lng": "longitude"
+            },
+            "isVisible": true,
+            "visConfig": {
+              "opacity": 0.55,
+              "worldUnitSize": 10,
+              "resolution": 8,
+              "colorRange": {
+                "name": "BuPu",
+                "type": "sequential",
+                "category": "ColorBrewer",
+                "colors": [
+                  "#edf8fb",
+                  "#bfd3e6",
+                  "#9ebcda",
+                  "#8c96c6",
+                  "#8856a7",
+                  "#810f7c"
+                ]
+              },
+              "coverage": 0.8,
+              "sizeRange": [
+                0,
+                500
+              ],
+              "percentile": [
+                0,
+                100
+              ],
+              "elevationPercentile": [
+                0,
+                100
+              ],
+              "elevationScale": 50,
+              "enableElevationZoomFactor": true,
+              "fixedHeight": false,
+              "colorAggregation": "sum",
+              "sizeAggregation": "sum",
+              "enable3d": true
+            },
+            "hidden": false,
+            "textLabel": [
+              {
+                "field": null,
+                "color": [
+                  255,
+                  255,
+                  255
+                ],
+                "size": 18,
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor": "start",
+                "alignment": "center",
+                "outlineWidth": 0,
+                "outlineColor": [
+                  255,
+                  0,
+                  0,
+                  255
+                ],
+                "background": false,
+                "backgroundColor": [
+                  0,
+                  0,
+                  200,
+                  255
+                ]
+              }
+            ]
+          },
+          "visualChannels": {
+            "colorField": {
+              "name": "sample_count",
+              "type": "integer"
+            },
+            "colorScale": "quantile",
+            "sizeField": {
+              "name": "sample_count",
+              "type": "integer"
+            },
+            "sizeScale": "linear"
+          }
+        }
+      ],
+      "effects": [],
+      "interactionConfig": {
+        "tooltip": {
+          "fieldsToShow": {
+            "cargo_density": [
+              {
+                "name": "density",
+                "format": null
+              },
+              {
+                "name": "log_density",
+                "format": null
+              },
+              {
+                "name": "ship_type",
+                "format": null
+              }
+            ],
+            "fishing_density": [
+              {
+                "name": "density",
+                "format": null
+              },
+              {
+                "name": "log_density",
+                "format": null
+              },
+              {
+                "name": "ship_type",
+                "format": null
+              }
+            ],
+            "tanker_density": [
+              {
+                "name": "density",
+                "format": null
+              },
+              {
+                "name": "log_density",
+                "format": null
+              },
+              {
+                "name": "ship_type",
+                "format": null
+              }
+            ],
+            "beach_litter": [
+              {
+                "name": "BeachCode",
+                "format": null
+              },
+              {
+                "name": "BeachName",
+                "format": null
+              },
+              {
+                "name": "Country",
+                "format": null
+              },
+              {
+                "name": "BeachLatitude",
+                "format": null
+              },
+              {
+                "name": "BeachLongitude",
+                "format": null
+              }
+            ],
+            "seafloor_litter": [
+              {
+                "name": "total_items",
+                "format": null
+              },
+              {
+                "name": "trawl_count",
+                "format": null
+              }
+            ],
+            "floating_litter": [
+              {
+                "name": "sample_count",
+                "format": null
+              }
+            ]
+          },
+          "compareMode": false,
+          "compareType": "absolute",
+          "enabled": true
+        },
+        "brush": {
+          "size": 0.5,
+          "enabled": false
+        },
+        "geocoder": {
+          "enabled": false
+        },
+        "coordinate": {
+          "enabled": false
+        }
+      },
+      "layerBlending": "normal",
+      "overlayBlending": "normal",
+      "splitMaps": [],
+      "animationConfig": {
+        "currentTime": null,
+        "speed": 1
+      },
+      "editor": {
+        "features": [],
+        "visible": true
+      }
+    },
+    "mapState": {
+      "bearing": 20.835443037974684,
+      "dragRotate": true,
+      "latitude": 46.75111889385015,
+      "longitude": -1.4959226259198697,
+      "pitch": 51.88857823568073,
+      "zoom": 4.222843853922072,
+      "isSplit": false,
+      "isViewportSynced": true,
+      "isZoomLocked": false,
+      "splitMapViewports": []
+    },
+    "mapStyle": {
+      "styleType": "maptiler-dark",
+      "topLayerGroups": {},
+      "visibleLayerGroups": {
+        "label": true,
+        "road": true,
+        "building": true
+      },
+      "threeDBuildingColor": [
+        224.45365307122788,
+        221.23183029987055,
+        213.7142438333701
+      ],
+      "backgroundColor": [
+        0,
+        0,
+        0
+      ],
+      "mapStyles": {}
+    },
+    "uiState": {
+      "mapControls": {
+        "mapLegend": {
+          "active": false
+        }
+      }
+    }
+  }
+}
