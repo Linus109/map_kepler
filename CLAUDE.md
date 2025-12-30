@@ -37,11 +37,13 @@ npm run lint
 6. **KeplerMap.jsx** renders the Kepler.gl component with responsive sizing
 
 ### Key Files
-- `src/App.jsx` - Redux store setup, MapTiler style definitions (streets/satellite/dark), initial map state centered on North Sea
-- `src/useLoadData.js` - Custom hook for loading all 6 GeoJSON datasets and dispatching to Redux
+- `src/App.jsx` - Redux store setup, MapTiler style definitions, mode selection state
+- `src/useLoadData.js` - Custom hook for loading datasets, accepts mode parameter
 - `src/KeplerMap.jsx` - Thin wrapper around `<KeplerGl>` component
-- `src/keplerConfig.json` - Exported Kepler.gl configuration with layer definitions (spectral color gradients for vessel density, 3D hexbins for litter)
-- `public/data/*.geojson` - 6 GeoJSON datasets (~175 MB total)
+- `src/ModeSelector.jsx` - Initial mode selection screen (Quick View vs Year Filtering)
+- `src/YearSelector.jsx` - Year filter UI (2017-2021 buttons), only shown in yearly mode
+- `src/keplerConfig.json` - Exported Kepler.gl configuration with layer definitions
+- `public/data/*.geojson` - 12 GeoJSON files (6 per-year + 6 aggregated)
 
 ### State Management
 - Redux with `@kepler.gl/reducers`
@@ -55,11 +57,29 @@ npm run lint
 - **centerMap disabled**: Uses fixed European center (North Sea: lat 55.0, lon 4.0, zoom 4) since some data is global but focus is Europe
 - **Map view**: Top-down 2D view (bearing: 0, pitch: 0). The mapState in keplerConfig.json must match App.jsx initial state to avoid view jumps on load
 
+### Data Modes
+The app offers two loading modes selected at startup via `ModeSelector`:
+
+**Quick View** (~167 MB):
+- Aggregated data across all years (2017-2021)
+- Files: `*_agg.geojson`
+- Faster load, no year filtering
+
+**Year Filtering** (~827 MB):
+- Per-year data with `year` field
+- Files: `*.geojson` (without `_agg`)
+- Shows `YearSelector` UI for filtering by year
+
 ### Data Processing
 - All GeoJSON files loaded in parallel via `Promise.all()`
-- Vessel density datasets contain 200k+ polygon features (3km grid cells)
-- Litter datasets contain point features with aggregated counts
-- Original data prepared via external Python script at `Wiss-Arbeiten/EDA/src/data_prep.py`
+- Mode determines file suffix: aggregated uses `_agg`, yearly uses no suffix
+- Loading state watches Kepler.gl Redux state for layer count to show accurate progress
+- Original data prepared via `Wiss-Arbeiten/EDA/src/data_prep.py` (generates both versions)
+
+### Year Filtering (yearly mode only)
+- `YearSelector` component provides buttons for 2017-2021 and "All"
+- Uses Kepler.gl's `addFilter` and `setFilter` actions (wrapped with `wrapTo`)
+- Filters are created on first year selection, then updated on subsequent selections
 
 ## Important Technical Details
 

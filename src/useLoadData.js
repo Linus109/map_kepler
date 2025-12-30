@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { addDataToMap } from "@kepler.gl/actions";
 import { processGeojson } from "@kepler.gl/processors";
 import KeplerGlSchema from "@kepler.gl/schemas";
@@ -19,12 +19,41 @@ import savedConfig from "./keplerConfig.json";
  * visualChannels and other layer settings are properly applied.
  */
 
-export function useLoadData() {
+const EXPECTED_LAYERS = 6;
+
+export function useLoadData(mode) {
   const dispatch = useDispatch();
+  const [fetchProgress, setFetchProgress] = useState("Initializing...");
+  const [dataDispatched, setDataDispatched] = useState(false);
+
+  // Watch Kepler.gl state to detect when all layers are ready
+  const layerCount = useSelector(
+    (state) => state.keplerGl?.map?.visState?.layers?.length || 0
+  );
+  const datasetCount = useSelector(
+    (state) => Object.keys(state.keplerGl?.map?.visState?.datasets || {}).length
+  );
+
+  // Data is fully loaded when all datasets and layers are present
+  const isReady = dataDispatched && datasetCount >= EXPECTED_LAYERS && layerCount >= EXPECTED_LAYERS;
+
+  // Determine current progress message
+  let progress = fetchProgress;
+  if (dataDispatched && !isReady) {
+    progress = `Rendering layers... (${layerCount}/${EXPECTED_LAYERS})`;
+  }
 
   useEffect(() => {
+    // Don't load until mode is selected
+    if (!mode) return;
+
     async function loadAllData() {
       try {
+        setFetchProgress("Fetching datasets...");
+
+        // Use aggregated files for quick view, yearly files for year filtering
+        const suffix = mode === "aggregated" ? "_agg" : "";
+
         // Fetch all datasets in parallel
         const [
           cargoRes,
@@ -34,13 +63,15 @@ export function useLoadData() {
           seafloorRes,
           floatingRes,
         ] = await Promise.all([
-          fetch("/data/vessel_density_cargo.geojson"),
-          fetch("/data/vessel_density_fishing.geojson"),
-          fetch("/data/vessel_density_tanker.geojson"),
-          fetch("/data/beach_litter.geojson"),
-          fetch("/data/seafloor_litter.geojson"),
-          fetch("/data/floating_litter.geojson"),
+          fetch(`/data/vessel_density_cargo${suffix}.geojson`),
+          fetch(`/data/vessel_density_fishing${suffix}.geojson`),
+          fetch(`/data/vessel_density_tanker${suffix}.geojson`),
+          fetch(`/data/beach_litter${suffix}.geojson`),
+          fetch(`/data/seafloor_litter${suffix}.geojson`),
+          fetch(`/data/floating_litter${suffix}.geojson`),
         ]);
+
+        setFetchProgress("Parsing JSON data...");
 
         const [
           cargoData,
@@ -67,9 +98,25 @@ export function useLoadData() {
           floatingLitter: floatingData.features?.length,
         });
 
+        setFetchProgress("Processing GeoJSON features...");
+
+        // Small delay to let UI update before heavy processing
+        await new Promise((resolve) => setTimeout(resolve, 50));
+
+        // Process GeoJSON data (this is CPU intensive)
+        const processedData = {
+          cargo: processGeojson(cargoData),
+          fishing: processGeojson(fishingData),
+          tanker: processGeojson(tankerData),
+          beach: processGeojson(beachData),
+          seafloor: processGeojson(seafloorData),
+          floating: processGeojson(floatingData),
+        };
+
+        setFetchProgress("Building map layers...");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+
         // Parse the saved config using KeplerGlSchema
-        // This is required for visualChannels to be properly applied
-        // Note: parseSavedConfig expects the full object with version included
         const parsedConfig = KeplerGlSchema.parseSavedConfig(savedConfig);
         console.log("Parsed config:", parsedConfig);
 
@@ -79,27 +126,27 @@ export function useLoadData() {
             datasets: [
               {
                 info: { id: "cargo_density", label: "Cargo Vessel Density" },
-                data: processGeojson(cargoData),
+                data: processedData.cargo,
               },
               {
                 info: { id: "fishing_density", label: "Fishing Vessel Density" },
-                data: processGeojson(fishingData),
+                data: processedData.fishing,
               },
               {
                 info: { id: "tanker_density", label: "Tanker Vessel Density" },
-                data: processGeojson(tankerData),
+                data: processedData.tanker,
               },
               {
                 info: { id: "beach_litter", label: "Beach Litter" },
-                data: processGeojson(beachData),
+                data: processedData.beach,
               },
               {
                 info: { id: "seafloor_litter", label: "Seafloor Litter" },
-                data: processGeojson(seafloorData),
+                data: processedData.seafloor,
               },
               {
                 info: { id: "floating_litter", label: "Floating Micro-litter" },
-                data: processGeojson(floatingData),
+                data: processedData.floating,
               },
             ],
             options: {
@@ -110,12 +157,16 @@ export function useLoadData() {
           })
         );
 
-        console.log("✓ All datasets loaded with parsed Kepler configuration");
+        console.log("✓ Data dispatched to Kepler.gl");
+        setDataDispatched(true);
       } catch (error) {
         console.error("Failed to load data:", error);
+        setFetchProgress("Error loading data");
       }
     }
 
     loadAllData();
-  }, [dispatch]);
+  }, [dispatch, mode]);
+
+  return { loading: !isReady, progress };
 }

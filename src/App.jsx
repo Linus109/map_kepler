@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import ReactDOM from "react-dom/client";
 import document from "global/document";
 
@@ -9,6 +10,8 @@ import keplerGlReducer, { enhanceReduxMiddleware } from "@kepler.gl/reducers";
 
 import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
 import KeplerMap from "./KeplerMap";
+import YearSelector from "./YearSelector";
+import ModeSelector from "./ModeSelector";
 import { useLoadData } from "./useLoadData";
 
 const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
@@ -101,9 +104,65 @@ const enhancers = applyMiddleware(...middleWares);
 const initialState = {};
 const store = createStore(reducers, initialState, compose(enhancers));
 
+const LoadingOverlay = ({ progress, mode }) => (
+  <div
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(36, 39, 48, 0.95)",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 1000,
+    }}
+  >
+    <div
+      style={{
+        width: "40px",
+        height: "40px",
+        border: "3px solid rgba(255,255,255,0.1)",
+        borderTopColor: "#1fbad6",
+        borderRadius: "50%",
+        animation: "spin 1s linear infinite",
+      }}
+    />
+    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    <div
+      style={{
+        marginTop: "20px",
+        color: "#a0a7b4",
+        fontSize: "14px",
+        fontWeight: 500,
+      }}
+    >
+      {progress}
+    </div>
+    <div
+      style={{
+        marginTop: "8px",
+        color: "#6a7485",
+        fontSize: "12px",
+      }}
+    >
+      Loading {mode === "yearly" ? "~827 MB" : "~175 MB"} of geospatial data
+    </div>
+  </div>
+);
+
 const App = () => {
-  // Load all datasets on mount
-  useLoadData();
+  const [mode, setMode] = useState(null); // null | "aggregated" | "yearly"
+
+  // Load datasets only after mode is selected
+  const { loading, progress } = useLoadData(mode);
+
+  // Show mode selector first
+  if (!mode) {
+    return <ModeSelector onSelect={setMode} />;
+  }
 
   return (
     <div
@@ -120,6 +179,8 @@ const App = () => {
           <KeplerMap height={height} width={width} mapStyles={mapStyles} />
         )}
       </AutoSizer>
+      {!loading && mode === "yearly" && <YearSelector />}
+      {loading && <LoadingOverlay progress={progress} mode={mode} />}
     </div>
   );
 };
