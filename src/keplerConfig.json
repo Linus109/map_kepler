@@ -852,12 +852,12 @@
       }
     },
     "mapState": {
-      "bearing": 20.835443037974684,
+      "bearing": 0,
       "dragRotate": true,
-      "latitude": 46.75111889385015,
-      "longitude": -1.4959226259198697,
-      "pitch": 51.88857823568073,
-      "zoom": 4.222843853922072,
+      "latitude": 55.0,
+      "longitude": 4.0,
+      "pitch": 0,
+      "zoom": 4,
       "isSplit": false,
       "isViewportSynced": true,
       "isZoomLocked": false,

@@ -103,7 +103,7 @@ export function useLoadData() {
               },
             ],
             options: {
-              centerMap: false, // Use config's mapState instead
+              centerMap: false, // Use fixed European center (some data is global but focus is Europe)
               readOnly: false,
             },
             config: parsedConfig, // Use the parsed config
