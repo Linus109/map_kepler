@@ -24,6 +24,9 @@ npm run preview
 
 # Run ESLint
 npm run lint
+
+# Build and serve (useful for testing Web Component)
+npm run build:serve
 ```
 
 ## Architecture
@@ -43,6 +46,9 @@ npm run lint
 - `src/ModeSelector.jsx` - Initial mode selection screen (Quick View vs Year Filtering)
 - `src/YearSelector.jsx` - Year filter UI (2017-2021 buttons), only shown in yearly mode
 - `src/keplerConfig.json` - Exported Kepler.gl configuration with layer definitions
+- `src/LitterAppWebComponent.jsx` - Full app as Web Component for external embedding
+- `src/litter-app.js` - Entry point for Web Component library build
+- `test.html` - Test page for Web Component (loads built UMD bundle)
 - `public/data/*.geojson` - 12 GeoJSON files (6 per-year + 6 aggregated)
 
 ### State Management
@@ -80,6 +86,58 @@ The app offers two loading modes selected at startup via `ModeSelector`:
 - `YearSelector` component provides buttons for 2017-2021 and "All"
 - Uses Kepler.gl's `addFilter` and `setFilter` actions (wrapped with `wrapTo`)
 - Filters are created on first year selection, then updated on subsequent selections
+
+### Web Component
+
+The full app can be built as a standalone Web Component (`<litter-app>`) for embedding in external HTML pages. Includes ModeSelector, data loading, YearSelector, and the Kepler map.
+
+**Build:**
+```bash
+npm run build  # Outputs to dist/litter-app.umd.cjs
+```
+
+**Usage:**
+```html
+<!-- With ModeSelector (user chooses mode) -->
+<litter-app></litter-app>
+
+<!-- Skip ModeSelector, load Quick View directly -->
+<litter-app mode="aggregated"></litter-app>
+
+<!-- Skip ModeSelector, load Year Filtering directly -->
+<litter-app mode="yearly"></litter-app>
+
+<script src="./dist/litter-app.umd.cjs"></script>
+```
+
+**Attributes:**
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `mode` | `"aggregated"` \| `"yearly"` | - | Skip ModeSelector if set |
+| `latitude` | number | 55.0 | Initial map latitude |
+| `longitude` | number | 4.0 | Initial map longitude |
+| `zoom` | number | 4 | Initial zoom level |
+| `map-style` | string | `maptiler-dark` | Style ID (`maptiler-streets`, `maptiler-satellite`, `maptiler-dark`) |
+| `maptiler-api-key` | string | Build-time key | MapTiler API key |
+| `read-only` | `"true"` | - | Hide Kepler UI controls |
+
+**Data Requirements:**
+- Host must serve GeoJSON files at `/data/*.geojson`
+- Files needed: `vessel_density_cargo.geojson`, `vessel_density_fishing.geojson`, `vessel_density_tanker.geojson`, `beach_litter.geojson`, `seafloor_litter.geojson`, `floating_litter.geojson`
+- For aggregated mode: use `*_agg.geojson` files
+
+**Architecture:**
+- `LitterAppWebComponent.jsx` extends `HTMLElement` (Custom Element v1)
+- No Shadow DOM (Kepler.gl/mapbox-gl require direct DOM access)
+- Creates own Redux store instance per component
+- Contains `InnerApp` React component that manages mode state and renders ModeSelector/Map/YearSelector
+- Uses `useLoadData` hook for data fetching
+- `litter-app.js` registers the custom element via `customElements.define("litter-app", ...)`
+
+**Vite Library Build:**
+- Entry point: `src/litter-app.js`
+- All dependencies bundled (no externals)
+- Outputs UMD format for browser compatibility
 
 ## Important Technical Details
 

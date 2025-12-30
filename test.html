@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Litter App Web Component Test</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: sans-serif;
+      }
+      h1 {
+        margin-bottom: 10px;
+      }
+      p {
+        color: #666;
+        margin-bottom: 20px;
+      }
+      litter-app {
+        display: block;
+        width: 100%;
+        height: 600px;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Litter App Web Component Test</h1>
+    <p>This example shows the ModeSelector. Use <code>mode="aggregated"</code> or <code>mode="yearly"</code> to skip it.</p>
+
+    <!-- Without mode attribute: shows ModeSelector -->
+    <litter-app></litter-app>
+
+    <!-- Examples with mode attribute (uncomment to test):
+    <litter-app mode="aggregated"></litter-app>
+    <litter-app mode="yearly"></litter-app>
+    -->
+
+    <script src="./dist/litter-app.umd.cjs"></script>
+  </body>
+</html>
