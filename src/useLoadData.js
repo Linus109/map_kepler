@@ -21,7 +21,7 @@ import savedConfig from "./keplerConfig.json";
 
 const EXPECTED_LAYERS = 6;
 
-export function useLoadData(mode) {
+export function useLoadData(mode, baseUrl = "") {
   const dispatch = useDispatch();
   const [fetchProgress, setFetchProgress] = useState("Initializing...");
   const [dataDispatched, setDataDispatched] = useState(false);
@@ -55,6 +55,8 @@ export function useLoadData(mode) {
         const suffix = mode === "aggregated" ? "_agg" : "";
 
         // Fetch all datasets in parallel
+        // baseUrl can be empty (local) or a CDN URL like https://cdn.jsdelivr.net/gh/user/repo@tag/public/data
+        const dataPath = baseUrl || "/data";
         const [
           cargoRes,
           fishingRes,
@@ -63,12 +65,12 @@ export function useLoadData(mode) {
           seafloorRes,
           floatingRes,
         ] = await Promise.all([
-          fetch(`/data/vessel_density_cargo${suffix}.geojson`),
-          fetch(`/data/vessel_density_fishing${suffix}.geojson`),
-          fetch(`/data/vessel_density_tanker${suffix}.geojson`),
-          fetch(`/data/beach_litter${suffix}.geojson`),
-          fetch(`/data/seafloor_litter${suffix}.geojson`),
-          fetch(`/data/floating_litter${suffix}.geojson`),
+          fetch(`${dataPath}/vessel_density_cargo${suffix}.geojson`),
+          fetch(`${dataPath}/vessel_density_fishing${suffix}.geojson`),
+          fetch(`${dataPath}/vessel_density_tanker${suffix}.geojson`),
+          fetch(`${dataPath}/beach_litter${suffix}.geojson`),
+          fetch(`${dataPath}/seafloor_litter${suffix}.geojson`),
+          fetch(`${dataPath}/floating_litter${suffix}.geojson`),
         ]);
 
         setFetchProgress("Parsing JSON data...");
@@ -166,7 +168,7 @@ export function useLoadData(mode) {
     }
 
     loadAllData();
-  }, [dispatch, mode]);
+  }, [dispatch, mode, baseUrl]);
 
   return { loading: !isReady, progress };
 }

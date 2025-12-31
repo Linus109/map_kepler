@@ -114,12 +114,21 @@ npm run build  # Outputs to dist/litter-app.umd.cjs
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `mode` | `"aggregated"` \| `"yearly"` | - | Skip ModeSelector if set |
+| `data-base-url` | string | `/data` | Base URL for GeoJSON files (e.g., jsDelivr CDN) |
 | `latitude` | number | 55.0 | Initial map latitude |
 | `longitude` | number | 4.0 | Initial map longitude |
 | `zoom` | number | 4 | Initial zoom level |
 | `map-style` | string | `maptiler-dark` | Style ID (`maptiler-streets`, `maptiler-satellite`, `maptiler-dark`) |
 | `maptiler-api-key` | string | Build-time key | MapTiler API key |
 | `read-only` | `"true"` | - | Hide Kepler UI controls |
+
+**Loading data from CDN (jsDelivr):**
+```html
+<litter-app
+  mode="aggregated"
+  data-base-url="https://cdn.jsdelivr.net/gh/USER/REPO@TAG/public/data"
+></litter-app>
+```
 
 **Data Requirements:**
 - Host must serve GeoJSON files at `/data/*.geojson`

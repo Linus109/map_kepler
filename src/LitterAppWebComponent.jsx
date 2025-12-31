@@ -65,9 +65,9 @@ const LoadingOverlay = ({ progress, mode }) => (
 );
 
 // Inner App Component - manages mode state and renders the app
-const InnerApp = ({ initialMode, mapStyles }) => {
+const InnerApp = ({ initialMode, mapStyles, dataBaseUrl }) => {
   const [mode, setMode] = useState(initialMode);
-  const { loading, progress } = useLoadData(mode);
+  const { loading, progress } = useLoadData(mode, dataBaseUrl);
 
   // Show mode selector if no mode set
   if (!mode) {
@@ -114,6 +114,7 @@ class LitterAppWebComponent extends HTMLElement {
       mapStyle: this.getAttribute("map-style") || "maptiler-dark",
       maptilerApiKey: this.getAttribute("maptiler-api-key") || DEFAULT_MAPTILER_API_KEY,
       readOnly: this.getAttribute("read-only") === "true",
+      dataBaseUrl: this.getAttribute("data-base-url") || "",
     };
   }
 
@@ -201,7 +202,7 @@ class LitterAppWebComponent extends HTMLElement {
     this.root = ReactDOM.createRoot(this.container);
     this.root.render(
       <Provider store={this.store}>
-        <InnerApp initialMode={props.mode} mapStyles={mapStyles} />
+        <InnerApp initialMode={props.mode} mapStyles={mapStyles} dataBaseUrl={props.dataBaseUrl} />
       </Provider>
     );
   }
