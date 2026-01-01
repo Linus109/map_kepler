@@ -171,7 +171,8 @@ When modifying data loading in useLoadData.js, dataset IDs must match those refe
 
 ### Environment Variables
 - `VITE_MAPTILER_API_KEY` - Required for MapTiler map tiles
-- Accessed via `import.meta.env.VITE_MAPTILER_API_KEY`
+- `VITE_DATA_BASE_URL` - Optional base URL for GeoJSON data (e.g., Cloudflare R2). Falls back to `/data` (local) if not set
+- Accessed via `import.meta.env.VITE_*`
 - Stored in `.env` file (git-ignored)
 
 ## Project Constraints

@@ -21,7 +21,10 @@ import savedConfig from "./keplerConfig.json";
 
 const EXPECTED_LAYERS = 6;
 
-export function useLoadData(mode, baseUrl = "") {
+// Use env variable for remote data, fallback to local /data
+const DEFAULT_DATA_URL = import.meta.env.VITE_DATA_BASE_URL || "/data";
+
+export function useLoadData(mode, baseUrl = DEFAULT_DATA_URL) {
   const dispatch = useDispatch();
   const [fetchProgress, setFetchProgress] = useState("Initializing...");
   const [dataDispatched, setDataDispatched] = useState(false);
@@ -56,7 +59,7 @@ export function useLoadData(mode, baseUrl = "") {
 
         // Fetch all datasets in parallel
         // baseUrl can be empty (local) or a CDN URL like https://cdn.jsdelivr.net/gh/user/repo@tag/public/data
-        const dataPath = baseUrl || "/data";
+        const dataPath = baseUrl || DEFAULT_DATA_URL;
         const [
           cargoRes,
           fishingRes,
