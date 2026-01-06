@@ -12,6 +12,7 @@ import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
 import KeplerMap from "./KeplerMap";
 import YearSelector from "./YearSelector";
 import ModeSelector from "./ModeSelector";
+import CompassButton from "./CompassButton";
 import { useLoadData } from "./useLoadData";
 
 const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
@@ -179,6 +180,7 @@ const App = () => {
           <KeplerMap height={height} width={width} mapStyles={mapStyles} />
         )}
       </AutoSizer>
+      {!loading && <CompassButton />}
       {!loading && mode === "yearly" && <YearSelector />}
       {loading && <LoadingOverlay progress={progress} mode={mode} />}
     </div>
