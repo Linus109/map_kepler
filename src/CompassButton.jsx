@@ -15,84 +15,58 @@ const CompassButton = () => {
   const isRotated = Math.abs(bearing) > 0.1;
 
   return (
-    <div style={styles.container}>
-      <div style={styles.label}>N</div>
-      <button
-        onClick={resetNorth}
-        title="Reset to North"
+    <button
+      onClick={resetNorth}
+      title="Reset to North"
+      className="map-control-button"
+      style={{
+        position: "absolute",
+        top: "266px", // Below the native controls (52px start + 5 buttons * ~40px spacing)
+        right: "12px",
+        zIndex: 10,
+        // Match Kepler's MapControlButton styles exactly
+        boxShadow: "0 6px 12px 0 rgba(0, 0, 0, 0.16)",
+        height: "32px",
+        width: "32px",
+        padding: "0",
+        borderRadius: "4px",
+        border: "none",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: isRotated ? "#1fbad6" : "#3a414c",
+        color: isRotated ? "#ffffff" : "#6a7485",
+        transition: "background-color 0.12s ease-in, color 0.12s ease-in",
+      }}
+      onMouseEnter={(e) => {
+        if (!isRotated) {
+          e.currentTarget.style.backgroundColor = "#3a414c";
+          e.currentTarget.style.color = "#ffffff";
+        }
+      }}
+      onMouseLeave={(e) => {
+        if (!isRotated) {
+          e.currentTarget.style.backgroundColor = "#3a414c";
+          e.currentTarget.style.color = "#6a7485";
+        }
+      }}
+    >
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
         style={{
-          ...styles.button,
-          ...(isRotated ? styles.buttonActive : {}),
+          transform: `rotate(${-bearing}deg)`,
+          transition: "transform 0.15s ease",
         }}
       >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          style={{
-            transform: `rotate(${-bearing}deg)`,
-            transition: "transform 0.15s ease",
-          }}
-        >
-          {/* Compass circle */}
-          <circle
-            cx="12"
-            cy="12"
-            r="10"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            opacity="0.4"
-          />
-          {/* North pointer (red) */}
-          <polygon points="12,4 14,12 12,10 10,12" fill="#f25138" />
-          {/* South pointer (white/gray) */}
-          <polygon points="12,20 14,12 12,14 10,12" fill="currentColor" opacity="0.5" />
-        </svg>
-      </button>
-    </div>
+        {/* Compass needle */}
+        <polygon points="12,2 15,12 12,10 9,12" fill="#f25138" />
+        <polygon points="12,22 15,12 12,14 9,12" fill="currentColor" />
+      </svg>
+    </button>
   );
-};
-
-const styles = {
-  container: {
-    position: "absolute",
-    bottom: "24px",
-    right: "12px",
-    zIndex: 100,
-    backgroundColor: "rgba(36, 39, 48, 0.95)",
-    borderRadius: "4px",
-    padding: "8px 12px",
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
-  },
-  label: {
-    color: "#a0a7b4",
-    fontSize: "11px",
-    fontWeight: 500,
-    textTransform: "uppercase",
-    letterSpacing: "0.5px",
-  },
-  button: {
-    padding: "6px",
-    border: "none",
-    borderRadius: "3px",
-    backgroundColor: "rgba(255,255,255,0.1)",
-    color: "#a0a7b4",
-    fontSize: "12px",
-    fontWeight: 500,
-    cursor: "pointer",
-    transition: "all 0.15s ease",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonActive: {
-    backgroundColor: "#1fbad6",
-    color: "#fff",
-  },
 };
 
 export default CompassButton;
