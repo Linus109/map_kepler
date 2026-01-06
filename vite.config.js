@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/map_kepler/',
   plugins: [react()],
   define: {
     // Node.js globals für Browser ersetzen
