@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' 'unsafe-inline' https://api.maptiler.com; img-src 'self' data: blob: https://*.maptiler.com https://*.openstreetmap.org; connect-src 'self' https://*.maptiler.com; worker-src 'self' blob:; child-src 'self' blob:; font-src 'self' data:;"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://api.maptiler.com; img-src 'self' data: blob: https://*.maptiler.com https://*.openstreetmap.org; connect-src 'self' https://*.maptiler.com https://studio-public-data.foursquare.com; worker-src 'self' blob:; child-src 'self' blob:; font-src 'self' data:;"
     />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
