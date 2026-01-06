@@ -21,8 +21,8 @@ import savedConfig from "./keplerConfig.json";
 
 const EXPECTED_LAYERS = 6;
 
-// Use Vite's BASE_URL (set in vite.config.js) to handle GitHub Pages subpath
-const DEFAULT_DATA_URL = `${import.meta.env.BASE_URL}data`;
+// Use env variable for remote data (Cloudflare R2), fallback to local with base path
+const DEFAULT_DATA_URL = import.meta.env.VITE_DATA_BASE_URL || `${import.meta.env.BASE_URL}data`;
 
 export function useLoadData(mode, baseUrl = DEFAULT_DATA_URL) {
   const dispatch = useDispatch();
