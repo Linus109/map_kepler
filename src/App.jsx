@@ -155,15 +155,16 @@ const LoadingOverlay = ({ progress, mode }) => (
 );
 
 const App = () => {
-  const [mode, setMode] = useState(null); // null | "aggregated" | "yearly"
+  // TEMP: Skip mode selection and go directly to yearly view
+  const [mode, setMode] = useState("yearly"); // null | "aggregated" | "yearly"
 
   // Load datasets only after mode is selected
   const { loading, progress } = useLoadData(mode);
 
-  // Show mode selector first
-  if (!mode) {
-    return <ModeSelector onSelect={setMode} />;
-  }
+  // Show mode selector first (TEMP: disabled)
+  // if (!mode) {
+  //   return <ModeSelector onSelect={setMode} />;
+  // }
 
   return (
     <div
