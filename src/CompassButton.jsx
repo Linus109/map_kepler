@@ -9,7 +9,7 @@ const CompassButton = () => {
   );
 
   const resetNorth = () => {
-    dispatch(updateMap({ bearing: 0, pitch: 0 }, 0));
+    dispatch(updateMap({ bearing: 0 }, 0));
   };
 
   const isRotated = Math.abs(bearing) > 0.1;
