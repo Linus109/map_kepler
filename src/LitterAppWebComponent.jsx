@@ -9,6 +9,7 @@ import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
 import KeplerMap from "./KeplerMap";
 import YearSelector from "./YearSelector";
 import ModeSelector from "./ModeSelector";
+import CompassButton from "./CompassButton";
 import { useLoadData } from "./useLoadData";
 
 // API Key aus .env zur Build-Zeit eingebettet
@@ -89,6 +90,7 @@ const InnerApp = ({ initialMode, mapStyles, dataBaseUrl }) => {
           <KeplerMap height={height} width={width} mapStyles={mapStyles} />
         )}
       </AutoSizer>
+      {!loading && <CompassButton />}
       {!loading && mode === "yearly" && <YearSelector />}
       {loading && <LoadingOverlay progress={progress} mode={mode} />}
     </div>
